@@ -20,7 +20,7 @@
 // Rozwiazanie (czyli dodane pliki i Main.cpp należy wgrać do UPEL 
 // jako archiwum tar.gz o strukturze takiej jak w zadaniu na UPeL.
 // UWAGA:
-// * archiwum powinno zawierać katalog z zadaniem lab02/
+// * archiwum powinno zawierać katalog z zadaniem lab01/
 // * katalog z zadaniem powinien zawierać podkatalog include/
 //   w którym muszą znajdować się wszystkie niezbędne pliki nagłówkowe
 // * katalog z zadaniem powinien zawierać podkatalog src/
@@ -30,46 +30,18 @@
 // * tworzenie archiwum: tar -czvf nazwa.tar.gz zad/
 //   np. tar -czvf lab01.tar.gz lab01/
 // * rozpakowanie archiwum: tar -xvf nazwa.tar
-// * wszystkie funkcje w plikach *.h powinny być okomentowane (patrz przyklad w pliku List.h (format pod Doxygena))
-// * do alokacji i dealokacji pamięci używaj operatorów: new i delete
-
-#include <iostream>
-#include "List.h"
-using namespace std;
 
 
-int main(int argc, char** argv) 
-{
-  slist List;
-  slistEl* p;
-	
-  init(&List);
-	
-  push_back(&List, 'M');
-  push_back(&List, 'a');
-  push_back(&List, 'r');
-  push_back(&List, 't');
+#include "MyLibrary.h"
 
-  p = find(&List, 'a');
-  if( p )
-    delete_after(p);
-
-  push_back(&List, 'r');
-  push_back(&List, 'i');
-  push_back(&List, 'n');
-  push_back(&List, 'x');
-  
-  p = find(&List, 'i');
-  if( p )
-    delete_after(p);
-
-
-  printl(&List);
-
-
+int main() {
+  PrintName("Gall Anonim");
+  const char* path = PROJECTPATH;
+  PrintInfo(PROJECTPATH);
   return 0;
 }
-
 /** Wynik dzialania programu:
-Moja lista: <Matrix>
+[INFO]:: Name: Gall Anonim
+[INFO]:: /home/ganonim/workspace/ppo/2023_2024/lab01/ex
 */
+// Oczywiście, ścieżka do projektu będzie się różnić.

@@ -1,77 +1,235 @@
-/* 
- Proszę dopisać kod, dodać nowe pliki, tak aby program się wykonywał, a wynik jego działania był taki sam, jak podany na końcu tego pliku.
-
-Klasa MapPoint (pliki MapPoint.h, MapPoint.cpp) reprezentuje punkt na mapie składający się z nazwy, długości (longitude) i szerokości (latitude) geograficznej i nic więcej.
- 
-Konstruktor klasy oraz funkcja setPoint ustawia wartości składowe - przyjmuje dodatnie i ujemne wartości wspórzędnych i na ich podstawiew print wnioskujemy strony świata. Odpowiednio zgodnie z układem współrzędnych dla długości ujemnych mamy W, a dla szerokości ujemnych mamy S.
-
-Wszystkie elementy składowe klasy mają być PRYWATNE, definiujemy odpowiednie metody get i set (ciała tych fukcji mogą być w pliku nagłówkowym). Proszę zwrócić uwagę na obiekty const.
-Nalezy samemu zdecydować, które funkcje mają być składowa a które zewnętrzne, operujące na obiektach klasy. Nie definiujemy funkcji zaprzyjaźnionych.
-
-Funkcja inTheMiddle powinna tworzyć i zwracać nowy punkt na mapie o zadanej nazwie i położeniu, które jest średnią arytmetyczną z położeń podanych punktów czyli x = (x1 + x2)/2 itp. Proszę uważać w przypadku różnych półkul.
-
-Funkcja distance oblicza pierwiastek z sumy kwadratów odległości względem południków i równoleżników, czyli sqrt(delta_x*delta_x + delta_y*delta_y).
-
-WSKAZÓWKI:
-Nazwa może być typu std::string
-Funkcja obliczająca pierwiastek nazywa się: sqrt(double) i znajduje się w bibliotece "cmath".
-Do obliczenia wartości bezwzględnej można wykorzystać fabs(double)
-Zachęcam do stosowania skróconej wersji if:
-cout << (a<b? "mniejsze": "większe");
-a = (a<b ? a: b);
-
-Pliku main.cpp, nie wolno modyfikować.
-*/
+// To jest przykład instrukcji do ćwiczeń - kompletna instrukcja 
+// zawsze będzie zawarta w tym miejscu, tj. w pliku main.cpp
+// Przykład polecenia 
+// Prosze dopisac kod, dodac nowe pliki, tak aby program wykonywal się
+// a wynik jego dzialania byl taki sam jak podany na końcu tego pliku
+//
+// Pliku main.cpp, nie wolno modyfikowac.
+//
+// Ostateczny program powinien byc przyjazny dla programisty
+// (miec czytelny i dobrze napisany kod)
+//
+// Przy wykonaniu zadania nie wolno korzystac z internetu, notatek,
+// ani żadnych innych materialow (w tym własnych wczesniej
+// przygotowanych plikow oprócz makefile, chyba że polecenie stanowi inaczej)
+//
+//
+// Kody źródłowe muszą znajdować się w katalogu do którego nikt oprócz
+// właściciela nie ma praw dostępu.
+// Rozwiazanie (czyli dodane pliki i main.cpp należy wgrać do UPEL 
+// jako archiwum tar.gz o strukturze takiej jak w zadaniu na UPeL.
+// UWAGA:
+// * archiwum powinno zawierać katalog z zadaniem lab04/
+// * katalog z zadaniem powinien zawierać podkatalog include/
+//   w którym muszą znajdować się wszystkie niezbędne pliki nagłówkowe
+// * katalog z zadaniem powinien zawierać podkatalog src/
+//   w którym muszą znajdować się wszystkie niezbędne pliki z kodem źródłowym
+// * katalog z zadaniem powinien zawierać podkatalog build/ 
+//   w którym powinien znajdować się tylko i wyłącznie plik Makefile
+// * tworzenie archiwum: tar -czvf nazwa.tar.gz zad/
+//   np. tar -czvf lab01.tar.gz lab01/
+// * rozpakowanie archiwum: tar -xvf nazwa.tar
+// * wszystkie funkcje w plikach *.h powinny być okomentowane wg formatu wprowadzonego 
+// * na wcześniejszych zajęciach
 
 
 #include <iostream>
-#include "MapPoint.h"
+#include "IceMachine.h"
+#include "Service.h"
+using namespace std;
 
-int main() {
-  const double longitude = 19.938333;
-  const double latitude = 50.061389;
-  MapPoint krakow;
-  krakow.setPoint("Krakow", longitude, latitude); //kierunki E N
-  krakow.print();
-  const MapPoint nyc("Nowy Jork", -74.0059, 40.7127); //kierunki W N
-  std::cout << "Nowy Jork: " << nyc.getLongitude() << ", " << nyc.getLatitude() << std::endl;
-  nyc.print();
-  MapPoint sydney;
-  sydney.setPoint("Sydney", 151.102, -33.454); //kierunki E S
-  sydney.print();
-  MapPoint porto("Porto", 41.162142, 8.621953); // kierunki E N
-  const MapPoint * portugalCity = &porto;
-  portugalCity->print();
 
-  const double longitudeShift = 4.1234;
-  const double latitudeShift = -25.987;
-  std::cout << "*** Po przesunieciu ***\n";
-  porto.move(longitudeShift, latitudeShift);
-  porto.print();
-  std::cout << "*** Po przesunieciu ***\n";
-  porto.move(-90.5710, 34.7300);
-  portugalCity->print();
+int main(int argc, char** argv) 
+{
+	IceMachine MyIceMachine1;
+	
+	MyIceMachine1.SetID(1);
+	MyIceMachine1.SetState(false);
+	MyIceMachine1.SetCapacity(2.0);
+	//MyIceMachine1.SetConsumption(0.025);
+	MyIceMachine1.SetConsumption(0.01);
+	MyIceMachine1.SetPowder(0.0);
 
-  std::cout <<"Odleglosci między NYC i Sydney: "  << distance(nyc,sydney) << std::endl;
-  const MapPoint * cl = closestPlace(krakow, nyc, sydney);
-  std::cout << "Blizej Krakowa jest " << cl->getName() << std::endl;
-  MapPoint mp = inTheMiddle(&nyc, &sydney, "Kenia");
-  mp.print();
+	MyIceMachine1.Presentation();
+	
+	MyIceMachine1.Make(-5);
+	MyIceMachine1.Make(50);
+	MyIceMachine1.Start();
+	MyIceMachine1.Reload(1);
+	MyIceMachine1.Make(50);
+	MyIceMachine1.Start();
+	MyIceMachine1.Make(50);
+	MyIceMachine1.Reload(5);
+	MyIceMachine1.Stop();
+	MyIceMachine1.Reload(-10);
+	MyIceMachine1.Reload(5);
+	MyIceMachine1.Start();
+	MyIceMachine1.Make(25);
+	MyIceMachine1.Make(10);
+	MyIceMachine1.Stop();
+
+	MyIceMachine1.Presentation();
+	
+//////////////////////////////////////	
+
+	IceMachine * pMyIceMachine1 = &MyIceMachine1;
+	
+//////////////////////////////////////	
+
+	Service IceMachineService;
+	
+	IceMachineService.Test(&MyIceMachine1, 10.0);
+	MyIceMachine1.Presentation();
+
+	IceMachineService.Test(pMyIceMachine1, 30.0);	
+	MyIceMachine1.Presentation();
+
+	IceMachineService.TestCopy(MyIceMachine1, 20.0);
+	MyIceMachine1.Presentation();
+
+//////////////////////////////////////	
+	
+
+	return 0;
 }
 
-/** Wynik działania programu:
-./main
-Wspolrzedne dla Krakow: 19.9383E, 50.0614N
-Nowy Jork: -74.0059, 40.7127
-Wspolrzedne dla Nowy Jork: 74.0059W, 40.7127N
-Wspolrzedne dla Sydney: 151.102E, 33.454S
-Wspolrzedne dla Porto: 41.1621E, 8.62195N
-*** Po przesunieciu ***
-Wspolrzedne dla Porto: 45.2855E, 17.365S
-*** Po przesunieciu ***
-Wspolrzedne dla Porto: 45.2855W, 17.365N
-Odleglosci między NYC i Sydney: 237.011
-Blizej Krakowa jest Nowy Jork
-Wspolrzedne dla Kenia: 38.5481E, 3.62935N
-*** Koniec ***
+/** Wynik dzialania programu:
+
+### Prezentacja ###
+Identyfikator maszyny do lodow wloskich: 1
+Maszyna do lodow wloskich jest wylaczona
+Pojemnosc maszyny do lodow wloskich wynosi 2 kilogramy/kilogramow
+Srednia wydajnosc wynosi 0.01 kilogramow na 1 porcje
+W maszynie do lodow wloskich jest 0 kilogramow proszku
+
+### Robienie lodow ###
+BLAD: Niepoprawna ilosc porcji
+
+### Robienie lodow ###
+BLAD: Wlacz maszyne do lodow wloskich
+
+### Uruchomienie maszyny do lodow wloskich ###
+BLAD: Brak proszku, wsyp
+
+### Wsypywanie proszku ###
+Wsypales 1 kilogram/kilogramow proszku
+
+### Robienie lodow ###
+BLAD: Wlacz maszyne do lodow wloskich
+
+### Uruchomienie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wlaczona
+
+### Robienie lodow ###
+Zrobiles 50 porcji lodow
+
+### Wsypywanie proszku ###
+BLAD: Wylacz maszyne do lodow wloskich przed wsypaniem proszku
+
+### Zatrzymanie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wylaczona
+
+### Wsypywanie proszku ###
+BLAD: Niepoprawna ilosc proszku do wsypania
+
+### Wsypywanie proszku ###
+Wsypales 1.5 kilogram/kilogramow proszku
+
+### Uruchomienie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wlaczona
+
+### Robienie lodow ###
+Zrobiles 25 porcji lodow
+
+### Robienie lodow ###
+Zrobiles 10 porcji lodow
+
+### Zatrzymanie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wylaczona
+
+### Prezentacja ###
+Identyfikator maszyny do lodow wloskich: 1
+Maszyna do lodow wloskich jest wylaczona
+Pojemnosc maszyny do lodow wloskich wynosi 2 kilogramy/kilogramow
+Srednia wydajnosc wynosi 0.01 kilogramow na 1 porcje
+W maszynie do lodow wloskich jest 1.65 kilogramow proszku
+
+#############################################################
+### Test serwisowy ###
+
+1. Wsyp proszek do pelna:
+### Wsypywanie proszku ###
+Wsypales 0.35 kilogram/kilogramow proszku
+2. Przebieg testowy: 10 porcji:
+### Uruchomienie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wlaczona
+
+### Robienie lodow ###
+Zrobiles 10 porcji lodow
+
+### Zatrzymanie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wylaczona
+
+### Koniec testu serwisowego ###
+#############################################################
+
+### Prezentacja ###
+Identyfikator maszyny do lodow wloskich: 1
+Maszyna do lodow wloskich jest wylaczona
+Pojemnosc maszyny do lodow wloskich wynosi 2 kilogramy/kilogramow
+Srednia wydajnosc wynosi 0.01 kilogramow na 1 porcje
+W maszynie do lodow wloskich jest 1.9 kilogramow proszku
+
+#############################################################
+### Test serwisowy ###
+
+1. Wsyp proszek do pelna:
+### Wsypywanie proszku ###
+Wsypales 0.1 kilogram/kilogramow proszku
+2. Przebieg testowy: 30 porcji:
+### Uruchomienie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wlaczona
+
+### Robienie lodow ###
+Zrobiles 30 porcji lodow
+
+### Zatrzymanie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wylaczona
+
+### Koniec testu serwisowego ###
+#############################################################
+
+### Prezentacja ###
+Identyfikator maszyny do lodow wloskich: 1
+Maszyna do lodow wloskich jest wylaczona
+Pojemnosc maszyny do lodow wloskich wynosi 2 kilogramy/kilogramow
+Srednia wydajnosc wynosi 0.01 kilogramow na 1 porcje
+W maszynie do lodow wloskich jest 1.7 kilogramow proszku
+
+#############################################################
+### Test serwisowy na egzemplarzu fabrycznym o identycznych parametrach ###
+
+1. Wsyp proszek do pelna:
+### Wsypywanie proszku ###
+Wsypales 0.3 kilogram/kilogramow proszku
+2. Przebieg testowy: 20 porcji:
+### Uruchomienie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wlaczona
+
+### Robienie lodow ###
+Zrobiles 20 porcji lodow
+
+### Zatrzymanie maszyny do lodow wloskich ###
+Maszyna do lodow wloskich zostala wylaczona
+
+### Koniec testu serwisowego ###
+#############################################################
+
+### Prezentacja ###
+Identyfikator maszyny do lodow wloskich: 1
+Maszyna do lodow wloskich jest wylaczona
+Pojemnosc maszyny do lodow wloskich wynosi 2 kilogramy/kilogramow
+Srednia wydajnosc wynosi 0.01 kilogramow na 1 porcje
+W maszynie do lodow wloskich jest 1.7 kilogramow proszku
+
 */
